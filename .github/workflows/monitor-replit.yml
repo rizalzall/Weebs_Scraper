@@ -2,24 +2,31 @@ name: Monitor Replit
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - master
 
 jobs:
-  monitor:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Check Replit Status Continuously
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Deploy to server
         run: |
-          end=$((SECONDS+3600))
-          while [ $SECONDS -lt $end ]; do
-            status=$(curl -s -o /dev/null -w "%{http_code}" https://replit.com/@rizalzall/delta-neww#LICENSE)
-            echo "Status code: $status"
-            if [ "$status" -ne 200 ]; then
-              echo "Replit endpoint is down"
-              exit 1
-            fi
-            sleep 60
-          done
+          scp -r . user@your-server:/path/to/deploy
+          ssh user@your-server 'cd /path/to/deploy && npm install && pm2 restart app'
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

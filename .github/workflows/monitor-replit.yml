@@ -1,0 +1,16 @@
+name: Monitor Replit
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Replit Status
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" https://<username>.<replname>.repl.co/api/health || exit 1

@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # Ganti dengan nama branch yang sesuai jika perlu
+      - master  # Ganti dengan nama branch yang sesuai jika perlu
 
 jobs:
   deploy:

@@ -19,6 +19,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      
+
       - run: npm install
-      - run: node weebs-api-index.js
+      - run: |
+          npm start
+
+      - name: Deploy to Heroku
+        run: |
+          heroku create my-app
+          git push heroku master
+          echo "API is live at: https://my-app.herokuapp.com"

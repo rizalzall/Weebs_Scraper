@@ -13,4 +13,4 @@ jobs:
 
       - name: Check Replit Status
         run: |
-          curl -s -o /dev/null -w "%{http_code}" https://<username>.<replname>.repl.co/api/health || exit 1
+          curl -s -o /dev/null -w "%{http_code}" https://replit.com/@rizalzall/delta-neww#LICENSE || exit 1

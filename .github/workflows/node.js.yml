@@ -21,8 +21,6 @@ jobs:
           cache: 'npm'
 
       - run: npm install
-      - run: |
-          npm start
 
       - name: Deploy to Heroku
         run: |

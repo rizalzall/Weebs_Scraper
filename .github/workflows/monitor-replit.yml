@@ -11,6 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check Replit Status
+      - name: Check Replit Status Continuously
         run: |
-          curl -s -o /dev/null -w "%{http_code}" https://replit.com/@rizalzall/delta-neww#LICENSE || exit 1
+          end=$((SECONDS+3600))
+          while [ $SECONDS -lt $end ]; do
+            status=$(curl -s -o /dev/null -w "%{http_code}" https://replit.com/@rizalzall/delta-neww#LICENSE)
+            echo "Status code: $status"
+            if [ "$status" -ne 200 ]; then
+              echo "Replit endpoint is down"
+              exit 1
+            fi
+            sleep 60
+          done

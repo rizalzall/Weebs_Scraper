@@ -1,9 +1,9 @@
-name: Monitor Replit
+name: Deploy to Server
 
 on:
   push:
     branches:
-      - master
+      - main  # Ganti dengan nama branch yang sesuai jika perlu
 
 jobs:
   deploy:
@@ -16,14 +16,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '14'  # Ganti dengan versi Node.js yang sesuai
 
       - name: Install dependencies
         run: npm install
 
+
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
       - name: Deploy to server
         run: |
-          scp -r . user@your-server:/path/to/deploy
-          ssh user@your-server 'cd /path/to/deploy && npm install && pm2 restart app'
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          sshpass -p '12345678900' ssh -o StrictHostKeyChecking=no root@188.75.79.75 -p 22 << 'EOF'
+            cd /path/to/deploy
+            npm install
+            pm2 restart app
+          EOF

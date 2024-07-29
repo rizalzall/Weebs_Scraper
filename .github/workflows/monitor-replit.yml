@@ -2,7 +2,7 @@ name: Monitor Replit
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   monitor:

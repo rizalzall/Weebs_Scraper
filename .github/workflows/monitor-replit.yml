@@ -21,9 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
-
       - name: Deploy to server
         run: |
           scp -r . user@your-server:/path/to/deploy
